@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D967D5172B39CDD300594689 /* FollowerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D967D5162B39CDD300594689 /* FollowerListViewController.swift */; };
 		D99F71042B359C7300F60856 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99F71032B359C7300F60856 /* SearchViewController.swift */; };
 		D99F71062B359CF200F60856 /* FavoriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99F71052B359CF200F60856 /* FavoriteListViewController.swift */; };
 		D99F71082B35BD4A00F60856 /* GFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99F71072B35BD4A00F60856 /* GFButton.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D967D5162B39CDD300594689 /* FollowerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerListViewController.swift; sourceTree = "<group>"; };
 		D99F71032B359C7300F60856 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		D99F71052B359CF200F60856 /* FavoriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewController.swift; sourceTree = "<group>"; };
 		D99F71072B35BD4A00F60856 /* GFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFButton.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				D9DA0AA32B34581500C21C03 /* AppDelegate.swift */,
 				D9DA0AA52B34581500C21C03 /* SceneDelegate.swift */,
 				D99F71032B359C7300F60856 /* SearchViewController.swift */,
+				D967D5162B39CDD300594689 /* FollowerListViewController.swift */,
 				D99F71052B359CF200F60856 /* FavoriteListViewController.swift */,
 				D99F71072B35BD4A00F60856 /* GFButton.swift */,
 				D99F71092B35C7D700F60856 /* GFTextField.swift */,
@@ -149,6 +152,7 @@
 				D99F71042B359C7300F60856 /* SearchViewController.swift in Sources */,
 				D9DA0AA42B34581500C21C03 /* AppDelegate.swift in Sources */,
 				D9DA0AA62B34581500C21C03 /* SceneDelegate.swift in Sources */,
+				D967D5172B39CDD300594689 /* FollowerListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +293,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 45V693LS79;
@@ -320,7 +324,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 45V693LS79;
