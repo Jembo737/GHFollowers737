@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-    // Views
+    // MARK: - Views
     let logoImageView = UIImageView()
     let usernameTextField = GFTextField()
     let callToActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
@@ -16,7 +16,7 @@ class SearchViewController: UIViewController {
     var isUserNameEntered: Bool {
         return !usernameTextField.text!.isEmpty
     }
-    
+    // MARK: - Controller LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -28,9 +28,9 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: true) 
     }
-    
+    // MARK: - Functions
     func createDismissKeyboardTapGesture() {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
@@ -84,7 +84,7 @@ class SearchViewController: UIViewController {
         ])
     }
 }
-
+// MARK: - SearchVC Extension
 extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         pushFollowerListVC()
