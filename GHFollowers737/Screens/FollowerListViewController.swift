@@ -18,7 +18,7 @@ class FollowerListViewController: UIViewController {
         
         NetworkManager.shared.getFollowers(for: username, page: 1) { followers, errorMesage in
             guard let followers = followers else {
-                self.presentGFAlertOnMainThread(title: "Bad things happend", message: errorMesage!, buttonTitle: "Ok")
+                self.presentGFAlertOnMainThread(title: "Bad things happend", message: errorMesage!.rawValue, buttonTitle: "Ok")
                 return
             }
             print("Followers.count = \(followers.count)")
