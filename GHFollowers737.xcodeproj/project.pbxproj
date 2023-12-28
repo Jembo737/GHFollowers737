@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE0CE66B2B3D65300030FE80 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0CE66A2B3D65300030FE80 /* NetworkManager.swift */; };
 		CE1FEB912B3C6AFC00DDAE8D /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1FEB902B3C6AFC00DDAE8D /* Follower.swift */; };
 		CE1FEB932B3C6C0500DDAE8D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1FEB922B3C6C0500DDAE8D /* User.swift */; };
 		D967D5172B39CDD300594689 /* FollowerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D967D5162B39CDD300594689 /* FollowerListViewController.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE0CE66A2B3D65300030FE80 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CE1FEB902B3C6AFC00DDAE8D /* Follower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		CE1FEB922B3C6C0500DDAE8D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D967D5162B39CDD300594689 /* FollowerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerListViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +57,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE0CE6692B3D65180030FE80 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				CE0CE66A2B3D65300030FE80 /* NetworkManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		CE1FEB8B2B3C41C300DDAE8D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +134,7 @@
 		D9DA0AA22B34581500C21C03 /* GHFollowers737 */ = {
 			isa = PBXGroup;
 			children = (
+				CE0CE6692B3D65180030FE80 /* Managers */,
 				CE1FEB8F2B3C6ADE00DDAE8D /* Model */,
 				CE1FEB8B2B3C41C300DDAE8D /* Screens */,
 				CE1FEB8C2B3C41E400DDAE8D /* Custom Views */,
@@ -214,6 +225,7 @@
 				D9A52A602B3AEA770025F537 /* GFBodyLabel.swift in Sources */,
 				CE1FEB912B3C6AFC00DDAE8D /* Follower.swift in Sources */,
 				D9A52A5E2B3ADC660025F537 /* GFTitleLabel.swift in Sources */,
+				CE0CE66B2B3D65300030FE80 /* NetworkManager.swift in Sources */,
 				D9DA0AA42B34581500C21C03 /* AppDelegate.swift in Sources */,
 				D9DA0AA62B34581500C21C03 /* SceneDelegate.swift in Sources */,
 				D967D5172B39CDD300594689 /* FollowerListViewController.swift in Sources */,
