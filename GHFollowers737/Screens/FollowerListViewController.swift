@@ -15,15 +15,18 @@ class FollowerListViewController: UIViewController {
     // MARK: - Parameters
     var username: String!
     var followers: [Follower] = []
+    var filteredFollowers: [Follower] = []
     var page = 1
     var hasMoreFollowers = true
     
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
+    
     // MARK: - ViewController LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
+        configureSearchConrtoller()
         configureCollectionView()
         getFollowers(username: username, page: page)
         configureDataSource()
@@ -32,7 +35,7 @@ class FollowerListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //        navigationController?.navigationBar.isHidden = false  have a bug where navigation controller dissapears
-        navigationController?.setNavigationBarHidden(false, animated: true)
+//        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     // MARK: - Methods
     func configureViewController() {
@@ -62,6 +65,17 @@ class FollowerListViewController: UIViewController {
         return flowLayout
     }
     
+    func configureSearchConrtoller() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search for a username"
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+    }
+    
     func getFollowers(username: String, page: Int) {
         showLoadingView()
         NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in
@@ -72,14 +86,14 @@ class FollowerListViewController: UIViewController {
                 if followers.count < 100 { self.hasMoreFollowers = false }
                 self.followers.append(contentsOf: followers)
                 DispatchQueue.main.async {
-                if self.followers.isEmpty {
-                    let message = "This user doesn't have any followers 🥲"
-
+                    if self.followers.isEmpty {
+                        let message = "This user doesn't have any followers 🥲"
+                        
                         self.showEmptyStateView(with: message, in: self.view)
                     }
                     return
                 }
-                self.updateData()
+                self.updateData(on: self.followers)
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Bad things happend", message: error.rawValue, buttonTitle: "Ok")
             }
@@ -94,7 +108,7 @@ class FollowerListViewController: UIViewController {
         })
     }
     
-    func updateData() {
+    func updateData(on followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
@@ -107,7 +121,7 @@ extension FollowerListViewController: UICollectionViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
-
+        
         if offsetY > contentHeight - height {
             guard hasMoreFollowers else { return }
             page += 1
@@ -115,3 +129,17 @@ extension FollowerListViewController: UICollectionViewDelegate {
         }
     }
 }
+
+extension FollowerListViewController: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+        filteredFollowers = followers.filter({ $0.login.lowercased().contains(filter.lowercased()) })
+        updateData(on: filteredFollowers)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        updateData(on: followers)
+    }
+}
+
+
