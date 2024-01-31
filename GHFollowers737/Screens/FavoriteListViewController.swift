@@ -8,11 +8,23 @@
 import UIKit
 
 class FavoriteListViewController: UIViewController {
-
+    
+    var favorites: [Follower] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemOrange
+        getFavorites()
+        view.backgroundColor = .systemBackground
+        
     }
-
+    func getFavorites() {
+        PersistenceManager.retrieveFavorites { result in
+            switch result {
+            case .success(let favorite):
+                self.favorites = favorite
+            case .failure(let error):
+                self.presentGFAlertOnMainThread(title: "Error", message: "Some error with favorites", buttonTitle: "Sad")
+            }
+        }
+    }
 }
