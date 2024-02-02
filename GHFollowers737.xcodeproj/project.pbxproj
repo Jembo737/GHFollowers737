@@ -19,6 +19,7 @@
 		CE7364072B67B95100363AA1 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7364062B67B95100363AA1 /* String+Ext.swift */; };
 		CE7364092B693B6700363AA1 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7364082B693B6700363AA1 /* PersistenceManager.swift */; };
 		CE73640B2B6BC09C00363AA1 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE73640A2B6BC09C00363AA1 /* FavoriteCell.swift */; };
+		CE73640E2B6CFBB400363AA1 /* GFTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE73640D2B6CFBB400363AA1 /* GFTabBarController.swift */; };
 		CE7482BC2B56C20A008108FB /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7482BB2B56C20A008108FB /* UserInfoVC.swift */; };
 		CE7E13D92B4ED32400E41805 /* GFEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E13D82B4ED32400E41805 /* GFEmptyStateView.swift */; };
 		CE9709F92B5FF90A002F7E2D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9709F82B5FF90A002F7E2D /* Constants.swift */; };
@@ -54,6 +55,7 @@
 		CE7364062B67B95100363AA1 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		CE7364082B693B6700363AA1 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		CE73640A2B6BC09C00363AA1 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
+		CE73640D2B6CFBB400363AA1 /* GFTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFTabBarController.swift; sourceTree = "<group>"; };
 		CE7482BB2B56C20A008108FB /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
 		CE7E13D82B4ED32400E41805 /* GFEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFEmptyStateView.swift; sourceTree = "<group>"; };
 		CE9709F82B5FF90A002F7E2D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		CE1FEB8C2B3C41E400DDAE8D /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE73640C2B6CFB8200363AA1 /* TabBarController */,
 				CE7E13D72B4ED30000E41805 /* Views */,
 				CE7E13D62B4ED2CE00E41805 /* ViewControllers */,
 				CE7E13D52B4ED2A600E41805 /* TextFields */,
@@ -169,6 +172,14 @@
 				CE1FEB922B3C6C0500DDAE8D /* User.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		CE73640C2B6CFB8200363AA1 /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				CE73640D2B6CFBB400363AA1 /* GFTabBarController.swift */,
+			);
+			path = TabBarController;
 			sourceTree = "<group>";
 		};
 		CE7E13D22B4ED23A00E41805 /* Labels */ = {
@@ -338,6 +349,7 @@
 				CE7364052B67B90F00363AA1 /* Date+Ext.swift in Sources */,
 				CEB853802B629AB80048A791 /* GFItemInfoViewController.swift in Sources */,
 				CE1FEB932B3C6C0500DDAE8D /* User.swift in Sources */,
+				CE73640E2B6CFBB400363AA1 /* GFTabBarController.swift in Sources */,
 				CE9709F92B5FF90A002F7E2D /* Constants.swift in Sources */,
 				CE9709FB2B612046002F7E2D /* GFItemInfoView.swift in Sources */,
 				D9A52A622B3AF1470025F537 /* GFAlertViewController.swift in Sources */,

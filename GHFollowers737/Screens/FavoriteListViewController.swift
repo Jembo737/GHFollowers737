@@ -56,7 +56,7 @@ class FavoriteListViewController: UIViewController {
                     }
                 }
             case .failure(let error):
-                self.presentGFAlertOnMainThread(title: "Error", message: "Some error with favorites", buttonTitle: "Sad")
+                self.presentGFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Sad")
             }
         }
     }
@@ -76,9 +76,7 @@ extension FavoriteListViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let favorite = favorites[indexPath.row]
-        let destVC = FollowerListViewController()
-        destVC.username = favorite.login
-        destVC.title = favorite.login
+        let destVC = FollowerListViewController(userName: favorite.login)
         navigationController?.pushViewController(destVC, animated: true)
     }
     

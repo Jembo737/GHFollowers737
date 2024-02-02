@@ -27,6 +27,16 @@ class FollowerListViewController: UIViewController {
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
     
+    init(userName: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.username = userName
+        title = userName
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - ViewController LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +91,6 @@ class FollowerListViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        
     }
     
     func getFollowers(username: String, page: Int) {
@@ -199,6 +208,4 @@ extension FollowerListViewController: FollowerListViewControllerDelegate {
         collectionView.setContentOffset(.zero, animated: true)
         getFollowers(username: username, page: page)
     }
-    
-    
 }

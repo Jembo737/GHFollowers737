@@ -28,11 +28,12 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true) 
+        usernameTextField.text = ""
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     // MARK: - Functions
     func createDismissKeyboardTapGesture() {
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
     
@@ -41,16 +42,17 @@ class SearchViewController: UIViewController {
             presentGFAlertOnMainThread(title: "Empty username", message: "Please enter a username. We need to know who we want to find 🥴", buttonTitle: "Ok")
             return
         }
-        let followerListVC = FollowerListViewController()
-        followerListVC.title = usernameTextField.text
-        followerListVC.username = usernameTextField.text
+        
+        usernameTextField.resignFirstResponder()
+        
+        let followerListVC = FollowerListViewController(userName: usernameTextField.text ?? "")
         navigationController?.pushViewController(followerListVC, animated: true)
     }
     
     func configureLogoImageView() {
         view.addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.image = UIImage(named: "gh-logo")
+        logoImageView.image = Images.ghLogo
         
         NSLayoutConstraint.activate([
             logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
@@ -63,9 +65,7 @@ class SearchViewController: UIViewController {
     func configureUsernameTextField() {
         view.addSubview(usernameTextField)
         usernameTextField.delegate = self
-        
-        usernameTextField.text = "SAllen0400"
-        
+                
         NSLayoutConstraint.activate([
             usernameTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 48),
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
