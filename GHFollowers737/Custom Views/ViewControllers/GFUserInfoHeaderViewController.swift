@@ -8,7 +8,7 @@
 import UIKit
 
 class GFUserInfoHeaderViewController: UIViewController {
-
+    
     let avatarImageView = GFAvatarImageView(frame: .zero)
     let usernameLabel = GFTitleLabel(textAlignment: .left, fontsize: 34)
     let nameLabel = GFSecondaryTitleLabel(fontSize: 18)
@@ -53,15 +53,11 @@ class GFUserInfoHeaderViewController: UIViewController {
     }
     
     func addSubView() {
-//        view.addSubview(avatarImageView)
-//        view.addSubview(username)
-//        view.addSubview(nameLabel)
-//        view.addSubview(locationImageView)
-//        view.addSubview(locationLabel)
-//        view.addSubview(bioLabel)
+        //Possible way to add many UIView's to hierarchy
+        //        let viewsArr = [avatarImageView, usernameLabel, nameLabel, locationImageView, locationLabel, bioLabel]
+        //        viewsArr.forEach { view in self.view.addSubview(object)}
         
-        let viewsArr = [avatarImageView, usernameLabel, nameLabel, locationImageView, locationLabel, bioLabel]
-        viewsArr.forEach { object in self.view.addSubview(object)}
+        view.addSubviews(avatarImageView, usernameLabel, nameLabel, locationImageView, locationLabel, bioLabel)
     }
     
     func layoutUI() {
@@ -98,7 +94,7 @@ class GFUserInfoHeaderViewController: UIViewController {
             bioLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: textImagePadding),
             bioLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
             bioLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bioLabel.heightAnchor.constraint(equalToConstant: 60)
+            bioLabel.heightAnchor.constraint(equalToConstant: 90)
         ])
     }
 }

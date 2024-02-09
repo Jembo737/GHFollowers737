@@ -7,12 +7,13 @@
 
 import UIKit
 
-protocol UserInfoVCDelegate: AnyObject {
-    func didTapGitHubProfile(for user: User)
-    func didTapGetFollowers(for user: User)
+protocol UserInfoViewControllerDelegate: AnyObject {
+    func didRequestFollowers(for username: String)
 }
 
 class UserInfoVC: GFDataLoadingViewController {
+    let scrollView = UIScrollView()
+    let contentView = UIView()
     
     let headerView = UIView()
     let itemViewOne = UIView()
@@ -22,13 +23,14 @@ class UserInfoVC: GFDataLoadingViewController {
     
     var username: String!
     var userLink: String!
-    weak var delegate: FollowerListViewControllerDelegate!
+    weak var delegate: UserInfoViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutUI()
         configureViewController()
         getUserInfo()
+        configureScrollView()
     }
     
     func configureViewController() {
@@ -37,6 +39,18 @@ class UserInfoVC: GFDataLoadingViewController {
         let shareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareButtonTapped))
         navigationItem.leftBarButtonItem = doneButton
         navigationItem.rightBarButtonItem = shareButton
+    }
+    
+    func configureScrollView() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        scrollView.pinToEdges(to: view)
+        contentView.pinToEdges(to: scrollView)
+        
+        NSLayoutConstraint.activate([
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.bottomAnchor.constraint(equalTo: dateLabel.bottomAnchor)
+        ])
     }
     
     func getUserInfo() {
@@ -52,14 +66,8 @@ class UserInfoVC: GFDataLoadingViewController {
     }
     
     func configureUIElements(with user: User) {
-        let reppoItemVC = GFRepoItemViewController(user: user)
-        reppoItemVC.delegate = self
-        
-        let followerItemVC = GFFollowerItemViewController(user: user)
-        followerItemVC.delegate = self
-        
-        self.add(childVC: reppoItemVC, to: self.itemViewOne)
-        self.add(childVC: followerItemVC, to: self.itemViewTwo)
+        self.add(childVC: GFRepoItemViewController(user: user, delegate: self), to: self.itemViewOne)
+        self.add(childVC: GFFollowerItemViewController(user: user, delegate: self), to: self.itemViewTwo)
         self.add(childVC: GFUserInfoHeaderViewController(user: user), to: self.headerView)
         self.dateLabel.text = "On GitHub since \(user.createdAt.convertToMonthYearFormat())"
     }
@@ -70,18 +78,18 @@ class UserInfoVC: GFDataLoadingViewController {
         itemViews = [headerView, itemViewOne, itemViewTwo, dateLabel]
         
         for itemView in itemViews {
-            view.addSubview(itemView)
+            contentView.addSubview(itemView)
             itemView.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
-                itemView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
-                itemView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding)
+                itemView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+                itemView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
             ])
         }
         
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 180),
+            headerView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 210),
             
             itemViewOne.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
             itemViewOne.heightAnchor.constraint(equalToConstant: itemHeight),
@@ -90,7 +98,7 @@ class UserInfoVC: GFDataLoadingViewController {
             itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight),
             
             dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
-            dateLabel.heightAnchor.constraint(equalToConstant: 18)
+            dateLabel.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -111,13 +119,12 @@ class UserInfoVC: GFDataLoadingViewController {
     }
 }
 
-extension UserInfoVC: UserInfoVCDelegate {
+extension UserInfoVC: GFRepoItemViewControllerDelegate, GFFollowerItemViewControllerDelegate {
     func didTapGitHubProfile(for user: User ) {
         guard let url = URL(string: user.htmlUrl) else {
             presentGFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid", buttonTitle: "Ok")
             return
         }
-        
         presentSafariVC(for: url)
     }
     
@@ -129,3 +136,4 @@ extension UserInfoVC: UserInfoVCDelegate {
         dismissVC()
     }
 }
+
