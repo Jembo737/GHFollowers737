@@ -23,15 +23,20 @@ class FavoriteCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarImageView.image = nil
+    }
+    
     func set(favorite: Follower) {
+        avatarImageView.image = nil
         usernameLabel.text = favorite.login
         NetworkManager.shared.downloadImage(from: favorite.avatarUrl) { [weak self] image in
             guard let self = self else { return }
-            
-            DispatchQueue.main.async {
-                self.avatarImageView.image = image
-            }
+            self.avatarImageView.image = image
         }
+        
+        print(favorite.login, favorite.avatarUrl)
     }
     
     private func configure() {
@@ -39,7 +44,6 @@ class FavoriteCell: UITableViewCell {
         
         accessoryType = .disclosureIndicator
         let padding: CGFloat = 12
-        
         
         NSLayoutConstraint.activate([
             avatarImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),

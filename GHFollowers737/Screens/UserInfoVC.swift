@@ -6,12 +6,13 @@
 //
 
 import UIKit
-
+// MARK: - Protocol
 protocol UserInfoViewControllerDelegate: AnyObject {
     func didRequestFollowers(for username: String)
 }
 
 class UserInfoVC: GFDataLoadingViewController {
+    // MARK: - Parameters
     let scrollView = UIScrollView()
     let contentView = UIView()
     
@@ -24,7 +25,7 @@ class UserInfoVC: GFDataLoadingViewController {
     var username: String!
     var userLink: String!
     weak var delegate: UserInfoViewControllerDelegate!
-    
+    // MARK: - ViewController LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutUI()
@@ -32,7 +33,7 @@ class UserInfoVC: GFDataLoadingViewController {
         getUserInfo()
         configureScrollView()
     }
-    
+    // MARK: - Functions
     func configureViewController() {
         view.backgroundColor = .systemBackground
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
@@ -54,13 +55,26 @@ class UserInfoVC: GFDataLoadingViewController {
     }
     
     func getUserInfo() {
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let user):
-                DispatchQueue.main.async { self.configureUIElements(with: user) }
-            case .failure(let error):
-                self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+//        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let user):
+//                DispatchQueue.main.async { self.configureUIElements(with: user) }
+//            case .failure(let error):
+//                self.presentGFAlert(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
+//            }
+//        }
+        
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
+                configureUIElements(with: user)
+            } catch {
+                if let gfError = error as? GFError {
+                    presentGFAlert(title: "Something went wrong", message: gfError.rawValue, buttonTitle: "Ok")
+                } else {
+                    presentDefaultError()
+                }
             }
         }
     }
@@ -122,7 +136,7 @@ class UserInfoVC: GFDataLoadingViewController {
 extension UserInfoVC: GFRepoItemViewControllerDelegate, GFFollowerItemViewControllerDelegate {
     func didTapGitHubProfile(for user: User ) {
         guard let url = URL(string: user.htmlUrl) else {
-            presentGFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid", buttonTitle: "Ok")
+            presentGFAlert(title: "Invalid URL", message: "The URL attached to this user is invalid", buttonTitle: "Ok")
             return
         }
         presentSafariVC(for: url)
@@ -130,7 +144,7 @@ extension UserInfoVC: GFRepoItemViewControllerDelegate, GFFollowerItemViewContro
     
     func didTapGetFollowers(for user: User) {
         guard user.followers != 0 else {
-            presentGFAlertOnMainThread(title: "Oops", message: "It seems like user has no followers 🥲", buttonTitle: "So sad")
+            presentGFAlert(title: "Oops", message: "It seems like user has no followers 🥲", buttonTitle: "So sad")
             return}
         delegate.didRequestFollowers(for: user.login)
         dismissVC()

@@ -8,10 +8,10 @@
 import UIKit
 
 class FavoriteListViewController: GFDataLoadingViewController {
-    
+    // MARK: - Parameters
     let tableView = UITableView()
     var favorites: [Follower] = []
-    
+    // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
@@ -22,7 +22,7 @@ class FavoriteListViewController: GFDataLoadingViewController {
         super.viewWillAppear(true)
         getFavorites()
     }
-    
+    // MARK: - Functions
     func configureViewController() {
         view.backgroundColor = .systemBackground
         title = "Favorites"
@@ -46,17 +46,23 @@ class FavoriteListViewController: GFDataLoadingViewController {
             guard let self = self else { return }
             switch result {
             case .success(let favorite):
-                if favorite.isEmpty {
-                    self.showEmptyStateView(with: "No favorites", in: self.view)
-                } else {
-                    self.favorites = favorite
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        self.view.bringSubviewToFront(self.tableView)
-                    }
-                }
+                updateUI(with: favorite)
             case .failure(let error):
-                self.presentGFAlertOnMainThread(title: "Error", message: error.rawValue, buttonTitle: "Sad")
+                DispatchQueue.main.async {
+                    self.presentGFAlert(title: "Error", message: error.rawValue, buttonTitle: "Sad")
+                }
+            }
+        }
+    }
+    
+    func updateUI(with favorites: [Follower]) {
+        if favorites.isEmpty {
+            self.showEmptyStateView(with: "No favorites", in: self.view)
+        } else {
+            self.favorites = favorites
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.view.bringSubviewToFront(self.tableView)
             }
         }
     }
@@ -90,7 +96,9 @@ extension FavoriteListViewController: UITableViewDelegate, UITableViewDataSource
                 tableView.deleteRows(at: [indexPath], with: .left)
                 return
             }
-            self.presentGFAlertOnMainThread(title: "Unable to remove", message: error.rawValue, buttonTitle: "Ok")
+            DispatchQueue.main.async {
+                self.presentGFAlert(title: "Unable to remove", message: error.rawValue, buttonTitle: "Ok")
+            }
         }
     }
 }
